@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InnoRPG.scripts.generation
+namespace InnoRPG.scripts.generation.world
 {
-    public partial class WorldRenderer : Node
+    public partial class WorldLoader : Node
     {
-        //Generates the geometry for the world
+
     }
 }

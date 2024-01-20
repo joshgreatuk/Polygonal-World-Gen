@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Godot;
 
-namespace InnoRPG.scripts.generation.map
+namespace InnoRPG.scripts.generation.map.data
 {
     public class Centre
     {
@@ -18,6 +18,8 @@ namespace InnoRPG.scripts.generation.map
 
         public double elevation;
         public double temperature;
+
+        public Color renderedColour = Colors.Pink;
 
         public Centre(Vector2 position)
         {

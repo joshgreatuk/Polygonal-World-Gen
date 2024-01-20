@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Godot;
 
-namespace InnoRPG.scripts.generation.map
+namespace InnoRPG.scripts.generation.map.data
 {
     public class Edge
     {
@@ -13,6 +14,8 @@ namespace InnoRPG.scripts.generation.map
 
         public Corner v0;
         public Corner v1;
+
+        public int river;
 
         public Edge(Centre d0, Centre d1, Corner v0, Corner v1)
         {

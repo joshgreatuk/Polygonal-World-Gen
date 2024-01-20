@@ -6,4 +6,7 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>InnoRPG</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="scripts\utils\" />
+  </ItemGroup>
 </Project>
