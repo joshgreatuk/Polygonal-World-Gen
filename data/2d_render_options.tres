@@ -1,0 +1,31 @@
+[gd_resource type="Resource" script_class="World2DRenderOptions" load_steps=2 format=3 uid="uid://m40ttwe7y7he"]
+
+[ext_resource type="Script" path="res://scripts/generation/world/World2DRenderOptions.cs" id="1_c2gti"]
+
+[resource]
+script = ExtResource("1_c2gti")
+renderScale = 1.0
+cornerScale = 2.0
+edgeScale = 1.0
+centreScale = 2.0
+linkScale = 1.0
+riverScale = 0.5
+cornerMode = 1
+edgeMode = 1
+centreMode = 41
+cornerColour = Color(0, 0, 1, 1)
+edgeColour = Color(0, 0, 0, 1)
+centreColour = Color(0.627451, 0.12549, 0.941176, 1)
+riverColour = Color(0.529412, 0.807843, 0.921569, 1)
+linkedColour = Color(1, 0, 0, 1)
+landColour = Color(0.133333, 0.545098, 0.133333, 1)
+lakeColour = Color(0.878431, 1, 1, 1)
+oceanColour = Color(0.678431, 0.847059, 0.901961, 1)
+beachColour = Color(1, 1, 0.878431, 1)
+cliffColour = Color(0.745098, 0.745098, 0.745098, 1)
+hotColour = Color(1, 0, 0, 1)
+temperateColour = Color(0, 1, 0, 1)
+coldColour = Color(0, 0, 1, 1)
+highColour = Color(0, 1, 0, 1)
+midColour = Color(0, 0.501961, 0.501961, 1)
+lowColour = Color(0, 0, 1, 1)

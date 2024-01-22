@@ -16,8 +16,8 @@ namespace InnoRPG.scripts.generation.map.data
 
         public WaterFlags waterFlags;
 
-        public double elevation = int.MaxValue;
-        public double temperature = int.MaxValue;
+        public double elevation = 0;
+        public double temperature = 0;
 
         public Corner downSlope;
         public int river = 0;
@@ -39,6 +39,14 @@ namespace InnoRPG.scripts.generation.map.data
             return false;
         }
 
-        public bool IsBorder() => position.X == 0 || position.Y == 0 || position.X == borderPos || position.Y == borderPos;
+        private bool? isBorder = null;
+        public bool IsBorder
+        {
+            get
+            {
+                if (isBorder == null) isBorder = position.X == 0 || position.Y == 0 || position.X == borderPos || position.Y == borderPos;
+                return (bool)isBorder;
+            }
+        }
     }
 }

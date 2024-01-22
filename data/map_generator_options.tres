@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MapGenerationOptions" load_steps=2 format=3 uid="uid://2d448gvu45je"]
+
+[ext_resource type="Script" path="res://scripts/generation/map/MapGenerationOptions.cs" id="1_itdef"]
+
+[resource]
+script = ExtResource("1_itdef")
+voronoiPointCount = 1000
+worldSize = 1024
+lloydsAlgorithmIterations = 3
+elevationScaleFactor = 1.1
+islandFactor = 1.07
+waterLevel = 0.15
+allowCliffs = true
+NTemp = 20.0
+EquatorTemp = 50.0
+STemp = 0.0
+equatorPosition = 0.6
+riverIterations = 200

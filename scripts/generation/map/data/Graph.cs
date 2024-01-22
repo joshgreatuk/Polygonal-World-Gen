@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,9 @@ namespace InnoRPG.scripts.generation.map.data
 {
     public class Graph
     {
+        public List<Vector2> randomPoints;
+
+        public ulong mapSeed;
         public int graphSize;
 
         public List<Centre> centres = new();

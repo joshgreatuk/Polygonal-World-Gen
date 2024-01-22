@@ -32,12 +32,14 @@ namespace InnoRPG.scripts.generation.world
         {
             this.map = map;
             mapDrawn = false;
+            Visible = true;
             if (drawMap) QueueRedraw();
         }
 
         public override void _Draw()
         {
-            if (mapDrawn || map == null) return;
+            //if (mapDrawn || map == null) return;
+            if (map == null) return;
 
             //Draw map
             if (!map.limitsCalculated) map.CalculateGraphLimits();
@@ -45,6 +47,8 @@ namespace InnoRPG.scripts.generation.world
             DrawCentres(options.centreMode);
             DrawEdges(options.edgeMode);
             DrawCorners(options.cornerMode);
+
+            Scale = new Vector2(options.renderScale, options.renderScale);
 
             mapDrawn = true;
         }
@@ -157,22 +161,31 @@ namespace InnoRPG.scripts.generation.world
                         {
                             DrawLine(centre.position, adjacent.position, options.linkedColour, options.linkScale);
                         }
-
-                        DrawCircle(centre.position, options.linkScale, options.linkedColour);
                     }
                 }
+
+                if (mode.HasFlag(World2DRenderOptions.ColourMode2D.Solid))
+                {
+                    DrawCircle(centre.position, options.centreScale, options.centreColour);
+                }
+
+                if (mode.HasFlag(World2DRenderOptions.ColourMode2D.Flush))
+                {
+                    DrawArc(centre.position, options.centreScale, 0, 360, 32, options.centreColour, 1);
+                }
+
             }
 
-            //Solid, Dotted, Flush ignored
+            //Flush ignored
         }
         #endregion
         #region Utils
         public Color GetWaterColour(World2DRenderOptions.ColourMode2D mode, WaterFlags flags, double elevation) => flags switch
         {
             WaterFlags.Coast => elevation > 1f ? options.cliffColour : options.beachColour,
-            WaterFlags.Ocean => options.oceanColour,
+            WaterFlags.Ocean | WaterFlags.Water => options.oceanColour,
             WaterFlags.Water => options.lakeColour,
-            _ => options.riverColour,  
+            _ => options.landColour,  
         };
 
         public Color GetTempColour(double temperature) => Blend3(options.coldColour, options.temperateColour, options.hotColour,

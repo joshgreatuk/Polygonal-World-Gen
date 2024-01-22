@@ -33,6 +33,7 @@ namespace InnoRPG.scripts.generation.world
         [Export] public float renderScale = 1f;
         [Export] public float cornerScale = 1f;
         [Export] public float edgeScale = 1f;
+        [Export] public float centreScale = 1f;
         [Export] public float linkScale = 1f;
         [Export] public float riverScale = 0.5f;
 
@@ -45,13 +46,14 @@ namespace InnoRPG.scripts.generation.world
         [ExportCategory("Colour Options")]
         [Export] public Color cornerColour = Colors.Blue;
         [Export] public Color edgeColour = Colors.Black;
+        [Export] public Color centreColour = Colors.Purple;
         [Export] public Color riverColour = Colors.SkyBlue;
 
         [ExportGroup("Centre Colours")]
         [Export] public Color linkedColour = Colors.Red;
-        [Export] public Color landColour = Colors.AntiqueWhite;
-        [Export] public Color lakeColour = Colors.LightBlue;
-        [Export] public Color oceanColour = Colors.Blue;
+        [Export] public Color landColour = Colors.ForestGreen;
+        [Export] public Color lakeColour = Colors.LightCyan;
+        [Export] public Color oceanColour = Colors.LightBlue;
         [Export] public Color beachColour = Colors.LightYellow;
         [Export] public Color cliffColour = Colors.Gray;
 

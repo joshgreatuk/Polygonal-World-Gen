@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InnoRPG.scripts.generation.map.data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace InnoRPG.scripts.generation.map.layers
 {
     public abstract partial class MapGenLayer
     {
-
+        public abstract void ProcessLayer(ref Graph graph, MapGenerationOptions options);
     }
 }

@@ -35,7 +35,15 @@ namespace InnoRPG.scripts.generation.map.data
             return false;
         }
 
-        public bool IsBorder() => corners.Any(x => x.IsBorder());
+        private bool? isBorder = null;
+        public bool IsBorder 
+        { 
+            get
+            {
+                if (isBorder == null) isBorder = corners.Any(x => x.IsBorder);
+                return (bool)isBorder;
+            } 
+        }
     }
 
     [Flags]

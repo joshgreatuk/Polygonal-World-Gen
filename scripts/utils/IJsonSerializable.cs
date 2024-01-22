@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InnoRPG.scripts.generation.map.layers
+namespace InnoRPG.scripts.utils
 {
     public interface IJsonSerializable
     {
