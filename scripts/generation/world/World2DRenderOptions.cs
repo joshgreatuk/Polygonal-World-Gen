@@ -23,6 +23,16 @@ namespace InnoRPG.scripts.generation.world
             Linked = 64,
         }
 
+        [Flags]
+        public enum TextMode2D
+        {
+            None = 0,
+            Temperature = 1,
+            Elevation = 2,
+            Water = 4,
+            DistanceFromCoast = 8,
+        }
+
         /* Options
          * - Render size
          * - Corner size, border mode, fill mode
@@ -41,6 +51,13 @@ namespace InnoRPG.scripts.generation.world
         [Export] public ColourMode2D cornerMode;
         [Export] public ColourMode2D edgeMode;
         [Export] public ColourMode2D centreMode;
+
+        [ExportCategory("Text Options")]
+        [Export] public TextMode2D centreTextMode;
+        [Export] public TextMode2D cornerTextMode;
+        [Export] public Color textColour = Colors.Black;
+        [Export] public int fontSize = 12;
+        [Export] public bool includeWater = false;
 
 
         [ExportCategory("Colour Options")]

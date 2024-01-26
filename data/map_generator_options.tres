@@ -4,15 +4,15 @@
 
 [resource]
 script = ExtResource("1_itdef")
-voronoiPointCount = 1000
+voronoiPointCount = 2000
 worldSize = 1024
 lloydsAlgorithmIterations = 3
 elevationScaleFactor = 1.1
 islandFactor = 1.07
 waterLevel = 0.15
 allowCliffs = true
-NTemp = 20.0
-EquatorTemp = 50.0
-STemp = 0.0
+nTemp = 20.0
+equatorTemp = 50.0
+sTemp = 0.0
 equatorPosition = 0.6
-riverIterations = 200
+riverIterations = 300

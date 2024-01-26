@@ -13,7 +13,7 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
     {
         public override void ProcessLayer(ref Graph graph, MapGenerationOptions options)
         {
-            foreach (Corner corner in graph.corners.Where(x => x.IsBorder || x.waterFlags.HasFlag(WaterFlags.Water)))
+            foreach (Corner corner in graph.corners.Where(x => x.IsBorder || x.waterFlags.HasFlag(WaterFlags.Ocean)))
             {
                 corner.elevation = 0;
             }
@@ -60,6 +60,7 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
                 }
 
                 //Add randomness
+                corner.distanceFromCoast = distanceFromCoast;
                 distanceFromCoast += random.Randf();
 
                 corner.elevation = distanceFromCoast;

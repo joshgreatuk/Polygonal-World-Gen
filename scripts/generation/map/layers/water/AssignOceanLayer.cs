@@ -1,9 +1,11 @@
-﻿using InnoRPG.scripts.generation.map.data;
+﻿using Godot;
+using InnoRPG.scripts.generation.map.data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Corner = InnoRPG.scripts.generation.map.data.Corner;
 
 namespace InnoRPG.scripts.generation.map.layers.water
 {
@@ -46,11 +48,11 @@ namespace InnoRPG.scripts.generation.map.layers.water
                     && corner.touches.Any(x => !x.waterFlags.HasFlag(WaterFlags.Water)))
                 {
                     corner.waterFlags |= WaterFlags.Coast;
-                    corner.waterFlags |= ~WaterFlags.Water;
+                    corner.waterFlags &= ~WaterFlags.Water;
                 }
                 else
                 {
-                    corner.waterFlags |= ~WaterFlags.Water;
+                    corner.waterFlags &= ~WaterFlags.Water;
                 }
             }
         }

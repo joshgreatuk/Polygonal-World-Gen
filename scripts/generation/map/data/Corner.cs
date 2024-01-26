@@ -21,8 +21,11 @@ namespace InnoRPG.scripts.generation.map.data
 
         public Corner downSlope;
         public int river = 0;
+        public double distanceFromCoast = 0;
 
         private float borderPos;
+
+        public Label cornerLabel;
 
         public Corner(Vector2 position, float borderPos)
         {

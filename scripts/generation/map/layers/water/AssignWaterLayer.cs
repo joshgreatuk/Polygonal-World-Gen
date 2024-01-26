@@ -39,7 +39,9 @@ namespace InnoRPG.scripts.generation.map.layers.water
                 {
                     r1 = r2 = 0.2;
                 }
-                corner.waterFlags |= !(length < r1 || length > r1 * options.islandFactor && length < r2) ? WaterFlags.Water : ~WaterFlags.Water;
+                corner.waterFlags = !(length < r1 || length > r1 * options.islandFactor && length < r2) 
+                    ? corner.waterFlags |= WaterFlags.Water 
+                    : corner.waterFlags &= ~WaterFlags.Water;
             }
 
             foreach (Centre centre in graph.centres)

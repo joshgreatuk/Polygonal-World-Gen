@@ -10,7 +10,9 @@ namespace InnoRPG.scripts.generation.map
     using data;
     using InnoRPG.scripts.generation.map.layers;
     using InnoRPG.scripts.generation.map.layers.elevation;
+    using InnoRPG.scripts.generation.map.layers.experiments;
     using InnoRPG.scripts.generation.map.layers.polygons;
+    using InnoRPG.scripts.generation.map.layers.rivers;
     using InnoRPG.scripts.generation.map.layers.temperature;
     using InnoRPG.scripts.generation.map.layers.water;
 
@@ -30,12 +32,18 @@ namespace InnoRPG.scripts.generation.map
             typeof(AssignOceanLayer),
             //Elevation TO-DO: Add noise-based elevation
             typeof(AssignCornerElevationLayer),
-            typeof(RedistributeElevationLayer),
+            //typeof(RedistributeElevationLayer), //Not sure if this is needed honestly
             typeof(AssignCentreElevationLayer),
             //Temperature
             typeof(AssignCornerTempLayer),
             typeof(AssignCentreTempLayer),
             //Rivers
+            typeof(CalculateDownslopeLayer),
+            typeof(GenerateRiversLayer),
+
+            //Experimentation
+            //typeof(E_MountainRoadLayer),
+            //typeof(E_RandomRoadLayer),
         };
 
         public Graph StartGenerator()
@@ -60,6 +68,7 @@ namespace InnoRPG.scripts.generation.map
 
                 MapGenLayer mapGenLayer = Activator.CreateInstance(layerType) as MapGenLayer;
                 //TO-DO: Add logging solution
+                GD.Print($"Processing map layer '{layerType.Name}'");
                 try
                 {
                     mapGenLayer.ProcessLayer(ref graph, options);

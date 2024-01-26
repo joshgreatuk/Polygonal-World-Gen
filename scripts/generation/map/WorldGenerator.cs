@@ -27,5 +27,10 @@ namespace InnoRPG.scripts.generation
 
             GD.Print("Done");
         }
+
+        public override void _UnhandledKeyInput(InputEvent @event)
+        {
+            if (@event.IsActionReleased("map_reset")) _Ready();
+        }
     }
 }

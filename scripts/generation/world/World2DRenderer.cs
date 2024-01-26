@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Corner = InnoRPG.scripts.generation.map.data.Corner;
 
@@ -16,6 +17,7 @@ namespace InnoRPG.scripts.generation.world
 
         private Graph map;
         private bool mapDrawn = false;
+        private LabelSettings labelSettings;
 
         public override void _Ready()
         {
@@ -26,10 +28,20 @@ namespace InnoRPG.scripts.generation.world
                 ProcessMode = ProcessModeEnum.Disabled;
                 return;
             }
+
+            labelSettings = new();
+            labelSettings.FontSize = Mathf.RoundToInt(options.fontSize * options.renderScale);
+            labelSettings.FontColor = options.textColour;
         }
 
         public void SetActiveMap(Graph map, bool drawMap=true)
         {
+            if (this.map != null)
+            {
+                foreach (Corner corner in this.map.corners.Where(x => x.cornerLabel != null)) corner.cornerLabel.QueueFree();
+                foreach (Centre centre in this.map.centres.Where(x => x.centreLabel != null)) centre.centreLabel.QueueFree();
+            }
+
             this.map = map;
             mapDrawn = false;
             Visible = true;
@@ -47,6 +59,8 @@ namespace InnoRPG.scripts.generation.world
             DrawCentres(options.centreMode);
             DrawEdges(options.edgeMode);
             DrawCorners(options.cornerMode);
+            DrawCentreText(options.centreTextMode);
+            DrawCornerText(options.cornerTextMode);
 
             Scale = new Vector2(options.renderScale, options.renderScale);
 
@@ -115,7 +129,7 @@ namespace InnoRPG.scripts.generation.world
                 }
                 else
                 {
-                    DrawLine(edge.v0.position, edge.v1.position, renderColour, edgeScale);
+                    DrawLine(edge.v0.position, edge.v1.position, renderColour, edgeScale, true);
                 }
             }
 
@@ -141,7 +155,7 @@ namespace InnoRPG.scripts.generation.world
                     renderColour = GetTempColour(centre.temperature);
                 }
 
-                if (mode.HasFlag(World2DRenderOptions.ColourMode2D.Elevation))
+                if (mode.HasFlag(World2DRenderOptions.ColourMode2D.Elevation) && !centre.waterFlags.HasFlag(WaterFlags.Water))
                 {
                     renderColour = GetElevationColour(centre.elevation);
                 }
@@ -178,6 +192,98 @@ namespace InnoRPG.scripts.generation.world
 
             //Flush ignored
         }
+
+        public void DrawCornerText(World2DRenderOptions.TextMode2D mode)
+        {
+            if (mode is World2DRenderOptions.TextMode2D.None) return;
+
+            foreach (Corner corner in options.includeWater ? map.corners : map.corners.Where(x => !x.waterFlags.HasFlag(WaterFlags.Water)))
+            {
+                string textContents = string.Empty;
+                if (mode.HasFlag(World2DRenderOptions.TextMode2D.Temperature))
+                {
+                    textContents += Mathf.Round(corner.temperature * 100) / 100;
+                }
+
+                if (mode.HasFlag(World2DRenderOptions.TextMode2D.Elevation))
+                {
+                    if (textContents != string.Empty) textContents += "\n";
+                    textContents += Mathf.Round(corner.elevation * 100) / 100;
+                }
+
+                if (mode.HasFlag(World2DRenderOptions.TextMode2D.Water))
+                {
+                    if (textContents != string.Empty) textContents += "\n";
+                    textContents += corner.waterFlags.ToString();
+                }
+
+                if (mode.HasFlag(World2DRenderOptions.TextMode2D.DistanceFromCoast))
+                {
+                    if (textContents != string.Empty) textContents += "\n";
+                    textContents += corner.distanceFromCoast;
+                }
+
+                Label textLabel;
+                if (corner.cornerLabel != null) textLabel = corner.cornerLabel;
+                else
+                {
+                    textLabel = new Label();
+                    textLabel.SetAnchorsPreset(Control.LayoutPreset.Center);
+                    textLabel.LabelSettings = labelSettings;
+                    textLabel.Name = $"Corner: {corner.position}";
+                    textLabel.HorizontalAlignment = HorizontalAlignment.Center;
+                    textLabel.VerticalAlignment = VerticalAlignment.Center;
+                    corner.cornerLabel = textLabel;
+                    AddChild(textLabel);
+                }
+                
+                textLabel.Text = textContents;
+                textLabel.Position = corner.position - textLabel.Size/2;
+            }
+        }
+
+        public void DrawCentreText(World2DRenderOptions.TextMode2D mode)
+        {
+            if (mode is World2DRenderOptions.TextMode2D.None) return;
+
+            foreach (Centre centre in options.includeWater ? map.centres : map.centres.Where(x => !x.waterFlags.HasFlag(WaterFlags.Water)))
+            {
+                string textContents = string.Empty;
+                if (mode.HasFlag(World2DRenderOptions.TextMode2D.Temperature))
+                {
+                    textContents += Mathf.Round(centre.temperature * 100) / 100;
+                }
+
+                if (mode.HasFlag(World2DRenderOptions.TextMode2D.Elevation))
+                {
+                    if (textContents != string.Empty) textContents += "\n";
+                    textContents += Mathf.Round(centre.elevation * 100) / 100;
+                }
+
+                if (mode.HasFlag(World2DRenderOptions.TextMode2D.Water))
+                {
+                    if (textContents != string.Empty) textContents += "\n";
+                    textContents += centre.waterFlags.ToString();
+                }
+
+                Label textLabel;
+                if (centre.centreLabel != null) textLabel = centre.centreLabel;
+                else
+                {
+                    textLabel = new Label();
+                    textLabel.SetAnchorsPreset(Control.LayoutPreset.Center);
+                    textLabel.LabelSettings = labelSettings;
+                    textLabel.Name = $"Centre: {centre.position}";
+                    textLabel.HorizontalAlignment = HorizontalAlignment.Center;
+                    textLabel.VerticalAlignment = VerticalAlignment.Center;
+                    centre.centreLabel = textLabel;
+                    AddChild(textLabel);
+                }
+
+                textLabel.Text = textContents;
+                textLabel.Position = centre.position - textLabel.Size / 2;
+            }
+        }
         #endregion
         #region Utils
         public Color GetWaterColour(World2DRenderOptions.ColourMode2D mode, WaterFlags flags, double elevation) => flags switch
@@ -201,8 +307,8 @@ namespace InnoRPG.scripts.generation.world
         /// <param name="normalisedBlend">Between 0 and 1, at 0.5 the colour will be colourB</param>
         /// <returns></returns>
         public Color Blend3(Color colourA, Color colourB, Color colourC, float normalisedBlend) => normalisedBlend > 0.5f ?
-            BlendLerp(colourB, colourC, (normalisedBlend*2)-1) :
-            BlendLerp(colourA, colourB, normalisedBlend*2);
+            BlendLerp(colourC, colourB, (normalisedBlend*2)-1) :
+            BlendLerp(colourB, colourA, normalisedBlend*2);
 
         public Color BlendLerp(Color colourA, Color colourB, float blend) => new Color(
             (float)(colourA.R * blend + colourB.R * (1 - blend)),

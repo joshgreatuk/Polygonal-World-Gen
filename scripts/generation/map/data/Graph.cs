@@ -33,11 +33,11 @@ namespace InnoRPG.scripts.generation.map.data
 
         public void CalculateGraphLimits()
         {
-            minElevation = corners.Min(x => x.elevation);
-            maxElevation = corners.Max(x => x.elevation);
+            minElevation = centres.Min(x => x.elevation);
+            maxElevation = centres.Max(x => x.elevation);
 
-            minTemperature = corners.Min(x => x.temperature);
-            maxTemperature = corners.Max(x => x.temperature);
+            minTemperature = centres.Min(x => x.temperature);
+            maxTemperature = centres.Max(x => x.temperature);
 
             limitsCalculated = true;
         }

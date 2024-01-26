@@ -74,6 +74,18 @@ namespace InnoRPG.scripts.generation.map.layers.polygons
                 }
             }
             graph.randomPoints.Clear(); //For memory
+
+            foreach (Corner corner in graph.corners)
+            {
+                foreach (Edge edge in corner.protrudes)
+                {
+                    Corner adjacent = null;
+                    if (edge.v1.Equals(corner)) adjacent = edge.v0;
+                    else if (edge.v0.Equals(corner)) adjacent = edge.v1;
+
+                    corner.adjacent.Add(adjacent);
+                }
+            }
         }
     }
 }

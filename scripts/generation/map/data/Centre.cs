@@ -20,6 +20,7 @@ namespace InnoRPG.scripts.generation.map.data
         public double temperature;
 
         public Color renderedColour = Colors.Pink;
+        public Label centreLabel;
 
         public Centre(Vector2 position)
         {
