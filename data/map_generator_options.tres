@@ -1,10 +1,14 @@
-[gd_resource type="Resource" script_class="MapGenerationOptions" load_steps=2 format=3 uid="uid://2d448gvu45je"]
+[gd_resource type="Resource" script_class="MapGenerationOptions" load_steps=3 format=3 uid="uid://2d448gvu45je"]
 
 [ext_resource type="Script" path="res://scripts/generation/map/MapGenerationOptions.cs" id="1_itdef"]
 
+[sub_resource type="Curve" id="Curve_1e3xb"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.049505, 0.175824), 0.688897, 0.688897, 0, 0, Vector2(0.321782, 0.527472), 0.0, 0.0, 0, 0, Vector2(0.688119, 0.538462), 0.0, 0.0, 0, 0, Vector2(0.920792, 0.791209), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
+point_count = 6
+
 [resource]
 script = ExtResource("1_itdef")
-voronoiPointCount = 2000
+voronoiPointCount = 5000
 worldSize = 1024
 lloydsAlgorithmIterations = 3
 elevationScaleFactor = 1.1
@@ -16,3 +20,4 @@ equatorTemp = 50.0
 sTemp = 0.0
 equatorPosition = 0.6
 riverIterations = 300
+elevationCurve = SubResource("Curve_1e3xb")

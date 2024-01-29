@@ -34,7 +34,7 @@ namespace InnoRPG.scripts.generation.map.data
         public void CalculateGraphLimits()
         {
             minElevation = centres.Min(x => x.elevation);
-            maxElevation = centres.Max(x => x.elevation);
+            maxElevation = centres.Where(x => x.elevation != Mathf.Inf).Max(x => x.elevation);
 
             minTemperature = centres.Min(x => x.temperature);
             maxTemperature = centres.Max(x => x.temperature);

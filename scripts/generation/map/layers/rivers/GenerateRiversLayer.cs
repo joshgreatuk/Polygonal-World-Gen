@@ -22,8 +22,8 @@ namespace InnoRPG.scripts.generation.map.layers.rivers
                 if (corner.waterFlags.HasFlag(WaterFlags.Ocean) || corner.elevation < 0.3 || corner.elevation < 0.9) continue;
 
                 while (!corner.waterFlags.HasFlag(WaterFlags.Coast))
-                {
-                    if (corner == corner.downSlope)
+                { 
+                    if (corner == corner.downSlope || corner.downSlope == null)
                     {
                         break;
                     }

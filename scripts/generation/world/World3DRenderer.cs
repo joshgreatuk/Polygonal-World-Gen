@@ -34,16 +34,17 @@ namespace InnoRPG.scripts.generation.world
 
         public void DrawMesh()
         {
-            List<Vector3> verts = new();
+            List<Tri> tris = new();
 
-            RenderTerrain(ref verts, currentMap);
+            RenderTerrain(ref tris, currentMap);
 
             SurfaceTool surfaceTool = new();
             surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
-            verts.ForEach(x => {
+            tris.ForEach(y => y.points.ForEach(x => {
                 surfaceTool.SetUV(new (x.X / currentMap.graphSize, x.Z / currentMap.graphSize));
+                surfaceTool.SetColor(y.colour);
                 surfaceTool.AddVertex(x);
-                });
+                }));
 
             surfaceTool.Index();
             surfaceTool.GenerateNormals();
@@ -62,8 +63,7 @@ namespace InnoRPG.scripts.generation.world
             meshInstance.MaterialOverride = baseMaterial;
         }
 
-        //TO-DO: Move these verts to a Triangle class, so we can save colour and UV data easily
-        private void RenderTerrain(ref List<Vector3> verts, Graph graph)
+        private void RenderTerrain(ref List<Tri> tris, Graph graph)
         { //Render terrain on top of mesh, apply colours
             foreach (Centre centre in graph.centres)
             {
@@ -85,19 +85,38 @@ namespace InnoRPG.scripts.generation.world
                         ToVector3(centre.corners[j].position, centre.elevation),
                         settings.flatMidPoint);
 
+                    Color centreColour = centre.waterFlags.HasFlag(WaterFlags.Water) ?
+                            GetWaterColour(centre.waterFlags, centre.elevation) :
+                            GetElevationColour(centre.elevation);
+
                     //Add the tri from centre to mid
-                    verts.Add(ToVector3(centre.position, centre.elevation));
-                    verts.Add(midI);
-                    verts.Add(midJ);
+                    tris.Add(new(new Vector3[] 
+                    {
+                        ToVector3(centre.position, centre.elevation),
+                        midI,
+                        midJ 
+                    },
+                        centreColour
+                    ));
 
                     //The the two tris (square) from mid to corner
-                    verts.Add(midI);
-                    verts.Add(ToVector3(centre.corners[i].position, centre.corners[i].elevation));
-                    verts.Add(ToVector3(centre.corners[j].position, centre.corners[j].elevation));
+                    tris.Add(new(new Vector3[]
+                    {
+                        midI,
+                        ToVector3(centre.corners[i].position, centre.corners[i].elevation),
+                        ToVector3(centre.corners[j].position, centre.corners[j].elevation)
+                    },
+                        centreColour
+                    ));
 
-                    verts.Add(midJ);
-                    verts.Add(midI);
-                    verts.Add(ToVector3(centre.corners[j].position, centre.corners[j].elevation));
+                    tris.Add(new(new Vector3[]
+                    {
+                        midJ,
+                        midI,
+                        ToVector3(centre.corners[j].position, centre.corners[j].elevation)
+                    },
+                        centreColour
+                    ));
 
                     //verts.Add(ToVector3(centre.position, centre.elevation));
                     //verts.Add(ToVector3(centre.corners[i].position, centre.corners[i].elevation));
@@ -106,12 +125,12 @@ namespace InnoRPG.scripts.generation.world
             }
         }
 
-        private void RenderFloor(ref List<Vector3> verts, Graph graph)
+        private void RenderFloor(ref List<Tri> verts, Graph graph)
         { //Render outskirts of map
 
         }
 
-        private void DrawRivers(ref List<Vector3> verts, Graph graph)
+        private void DrawRivers(ref List<Tri> verts, Graph graph)
         { //Take river edges, bezel them, eventually draw more polygons on top of riverbeds with a translucent material
 
         }
@@ -123,7 +142,7 @@ namespace InnoRPG.scripts.generation.world
         private Vector3 FindMidPoint(Vector3 a, Vector3 b, float midPointNormalized) =>
             a + ((b - a) * midPointNormalized);
 
-        public Color GetWaterColour(World2DRenderOptions.ColourMode2D mode, WaterFlags flags, double elevation) => flags switch
+        public Color GetWaterColour(WaterFlags flags, double elevation) => flags switch
         {
             WaterFlags.Coast => elevation > 1f ? settings.cliffColour : settings.beachColour,
             WaterFlags.Ocean | WaterFlags.Water => settings.oceanColour,
@@ -148,6 +167,18 @@ namespace InnoRPG.scripts.generation.world
             (float)(colourA.R * blend + colourB.R * (1 - blend)),
             (float)(colourA.G * blend + colourB.G * (1 - blend)),
             (float)(colourA.B * blend + colourB.B * (1 - blend)));
+
+        public class Tri
+        {
+            public List<Vector3> points; //Should be 3 only
+            public Color colour;
+
+            public Tri(Vector3[] points, Color colour)
+            {
+                this.points = points.ToList();
+                this.colour = colour;
+            }
+        }
 
     }
 }

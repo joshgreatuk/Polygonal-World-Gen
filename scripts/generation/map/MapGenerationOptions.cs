@@ -26,5 +26,7 @@ namespace InnoRPG.scripts.generation.map
         [Export] public float equatorPosition = 0.6f;
 
         [Export] public int riverIterations = 200;
+
+        [Export] public Curve elevationCurve;
     }
 }

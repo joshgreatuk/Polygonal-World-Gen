@@ -31,6 +31,8 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
 
                 queue.Enqueue(corner);
 
+                int iterationsNeeded = 0;
+
                 while (!coastFound)
                 {
                     if (queue.Count < 1)
@@ -57,8 +59,9 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
                     }
 
                     checkedCorners.Add(currentCorner);
+                    iterationsNeeded++;
                 }
-
+                GD.Print($"iterationsNeeded: {iterationsNeeded}");
                 //Add randomness
                 corner.distanceFromCoast = distanceFromCoast;
                 distanceFromCoast += random.Randf();

@@ -45,6 +45,10 @@ namespace InnoRPG.scripts.generation.map.data
                 return (bool)isBorder;
             } 
         }
+
+        public bool IsCentreLake() =>
+            waterFlags.HasFlag(WaterFlags.Water) &&
+            !waterFlags.HasFlag(WaterFlags.Ocean);
     }
 
     [Flags]

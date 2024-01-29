@@ -15,6 +15,7 @@ namespace InnoRPG.scripts.generation.map
     using InnoRPG.scripts.generation.map.layers.rivers;
     using InnoRPG.scripts.generation.map.layers.temperature;
     using InnoRPG.scripts.generation.map.layers.water;
+    using System.Diagnostics;
 
     [GlobalClass]
     public partial class MapGenerator : Node
@@ -31,14 +32,16 @@ namespace InnoRPG.scripts.generation.map
             typeof(AssignWaterLayer),
             typeof(AssignOceanLayer),
             //Elevation TO-DO: Add noise-based elevation
-            typeof(AssignCornerElevationLayer),
+            typeof(BreadthSearchCornerElevationLayer),
+            //typeof(AssignCornerElevationLayer),
             //typeof(RedistributeElevationLayer), //Not sure if this is needed honestly
+            //typeof(E_CurveAdjustment),
             typeof(AssignCentreElevationLayer),
             //Temperature
             typeof(AssignCornerTempLayer),
             typeof(AssignCentreTempLayer),
             //Rivers
-            typeof(CalculateDownslopeLayer),
+            //typeof(CalculateDownslopeLayer), //Handled by BreadthSearchCornerElevationLayer
             typeof(GenerateRiversLayer),
 
             //Experimentation
@@ -48,6 +51,8 @@ namespace InnoRPG.scripts.generation.map
 
         public Graph StartGenerator()
         {
+            Stopwatch stopwatch = new();
+
             if (options == null)
             {
                 GD.Print("Map Generator has no options assigned");
@@ -69,6 +74,7 @@ namespace InnoRPG.scripts.generation.map
                 MapGenLayer mapGenLayer = Activator.CreateInstance(layerType) as MapGenLayer;
                 //TO-DO: Add logging solution
                 GD.Print($"Processing map layer '{layerType.Name}'");
+                stopwatch.Restart();
                 try
                 {
                     mapGenLayer.ProcessLayer(ref graph, options);
@@ -77,6 +83,8 @@ namespace InnoRPG.scripts.generation.map
                 {
                     GD.PrintErr($"MapGenLayer '{layerType.Name}' returned error", ex);
                 }
+                stopwatch.Stop();
+                GD.Print($"Map layer '{layerType.Name}' returned in {stopwatch.ElapsedMilliseconds}ms");
             }
 
             GD.Print("Map generated");

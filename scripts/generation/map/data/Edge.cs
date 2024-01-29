@@ -35,5 +35,7 @@ namespace InnoRPG.scripts.generation.map.data
             }
             return false;
         }
+
+        public bool IsEdgeLake() => d0 != null && d0.IsCentreLake() || d1 != null && d1.IsCentreLake();
     }
 }

@@ -44,6 +44,9 @@ world3DRenderer = NodePath("World3DRenderer")
 mode = 1
 
 [node name="MapGenerator" type="Node" parent="WorldGenerator"]
+process_thread_group = 2
+process_thread_group_order = 0
+process_thread_messages = 0
 script = ExtResource("4_mjt22")
 options = ExtResource("5_6xhcl")
 
@@ -57,6 +60,6 @@ script = ExtResource("8_ytepu")
 settings = ExtResource("9_i0mi6")
 baseMaterial = ExtResource("9_1ximr")
 
-[node name="as" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -398.851, 481.738, -27.7285)
+[node name="WorldRender" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 481.738, 0)
 mesh = ExtResource("11_vmyav")

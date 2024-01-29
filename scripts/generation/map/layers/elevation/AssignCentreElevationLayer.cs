@@ -13,7 +13,7 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
         {
             if (options.allowCliffs)
             {
-                foreach (Centre centre in graph.centres.Where(x => !x.waterFlags.HasFlag(WaterFlags.Ocean)))
+                foreach (Centre centre in graph.centres)
                 {
                     double totalElevation = 0;
                     foreach (Corner corner in centre.corners) totalElevation += corner.elevation;
@@ -22,7 +22,7 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
             }
             else
             {
-                foreach (Centre centre in graph.centres.Where(x => !x.waterFlags.HasFlag(WaterFlags.Ocean)))
+                foreach (Centre centre in graph.centres)
                 {
                     double lowestElevation = int.MaxValue;
                     foreach (Corner corner in centre.corners)
