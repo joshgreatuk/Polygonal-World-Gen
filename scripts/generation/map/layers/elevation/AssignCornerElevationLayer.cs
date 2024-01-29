@@ -21,7 +21,7 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
             RandomNumberGenerator random = new();
             random.Seed = graph.mapSeed;
 
-            foreach (Corner corner in graph.corners.Where(x => !x.waterFlags.HasFlag(WaterFlags.Water)))
+            foreach (Corner corner in graph.corners.Where(x => !x.waterFlags.HasFlag(WaterFlags.Ocean)))
             {
                 Queue<Corner> queue = new();
                 Queue<Corner> nextQueue = new();

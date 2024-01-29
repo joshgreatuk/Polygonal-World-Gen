@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="World3DRenderOptions" load_steps=2 format=3 uid="uid://da335c41uwugg"]
+
+[ext_resource type="Script" path="res://scripts/generation/world/World3DRenderOptions.cs" id="1_u3h48"]
+
+[resource]
+script = ExtResource("1_u3h48")
+heightFactor = 5.0
+flatMidPoint = 0.8

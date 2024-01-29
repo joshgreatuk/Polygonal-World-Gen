@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://ccu5x8pdj3qwc"]
+[gd_scene load_steps=14 format=3 uid="uid://ccu5x8pdj3qwc"]
 
 [ext_resource type="Script" path="res://scripts/player/MoveableCamera.cs" id="1_lnjg2"]
 [ext_resource type="ArrayMesh" uid="uid://bmij0jjtmvwhi" path="res://polygon.tres" id="2_84our"]
@@ -7,6 +7,10 @@
 [ext_resource type="Resource" uid="uid://2d448gvu45je" path="res://data/map_generator_options.tres" id="5_6xhcl"]
 [ext_resource type="Script" path="res://scripts/generation/world/World2DRenderer.cs" id="5_7pmuj"]
 [ext_resource type="Resource" uid="uid://m40ttwe7y7he" path="res://data/2d_render_options.tres" id="7_ohgr5"]
+[ext_resource type="Script" path="res://scripts/generation/world/World3DRenderer.cs" id="8_ytepu"]
+[ext_resource type="Material" uid="uid://cei8ygp4mbq2r" path="res://materials/Material.tres" id="9_1ximr"]
+[ext_resource type="Resource" uid="uid://da335c41uwugg" path="res://data/3d_render_options.tres" id="9_i0mi6"]
+[ext_resource type="ArrayMesh" uid="uid://bkgv5q826r2i6" path="res://map_render.tres" id="11_vmyav"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6lioe"]
 
@@ -16,6 +20,7 @@ background_color = Color(0.984314, 0.929412, 0.968627, 1)
 [node name="WorldGenTester" type="Node3D"]
 
 [node name="TestMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(12.5036, 0, 0, 0, 12.5036, 0, 0, 0, 12.5036, 0, 0, 0)
 visible = false
 mesh = SubResource("CapsuleMesh_6lioe")
 
@@ -25,16 +30,18 @@ environment = SubResource("Environment_pccdu")
 script = ExtResource("1_lnjg2")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.845755, 0.475693, -0.24169, 0.456147, -0.409602, 0.790036, 0.276818, -0.778423, -0.563409, 0, 3, 0)
+transform = Transform3D(0.907044, 0.421036, 1.72198e-08, -3.25349e-08, 2.91919e-08, 1, 0.421036, -0.907044, 4.01767e-08, 0, 3, 0)
 
 [node name="Polygon" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.49023, -4.4492, 1.50917)
 mesh = ExtResource("2_84our")
 
-[node name="WorldGenerator" type="Node" parent="." node_paths=PackedStringArray("mapGen", "world2DRenderer")]
+[node name="WorldGenerator" type="Node" parent="." node_paths=PackedStringArray("mapGen", "world2DRenderer", "world3DRenderer")]
 script = ExtResource("3_r30d6")
 mapGen = NodePath("MapGenerator")
 world2DRenderer = NodePath("World2DRenderer")
+world3DRenderer = NodePath("World3DRenderer")
+mode = 1
 
 [node name="MapGenerator" type="Node" parent="WorldGenerator"]
 script = ExtResource("4_mjt22")
@@ -43,3 +50,13 @@ options = ExtResource("5_6xhcl")
 [node name="World2DRenderer" type="Node2D" parent="WorldGenerator"]
 script = ExtResource("5_7pmuj")
 options = ExtResource("7_ohgr5")
+
+[node name="World3DRenderer" type="Node3D" parent="WorldGenerator"]
+transform = Transform3D(3.16161, 0, 0, 0, 3.16161, 0, 0, 0, 3.16161, 0, 0, 0)
+script = ExtResource("8_ytepu")
+settings = ExtResource("9_i0mi6")
+baseMaterial = ExtResource("9_1ximr")
+
+[node name="as" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -398.851, 481.738, -27.7285)
+mesh = ExtResource("11_vmyav")

@@ -13,8 +13,12 @@ namespace InnoRPG.scripts.generation
     [GlobalClass]
     public partial class WorldGenerator : Node
     {
-        [Export] MapGenerator mapGen;
-        [Export] World2DRenderer world2DRenderer;
+        [Export] public MapGenerator mapGen;
+        [Export] public World2DRenderer world2DRenderer;
+        [Export] public World3DRenderer world3DRenderer;
+
+        public enum WorldGenMode { Gen2D, Gen3D }
+        [Export] public WorldGenMode mode;
 
         //The control class for the world generation system
         public override void _Ready()
@@ -23,7 +27,15 @@ namespace InnoRPG.scripts.generation
             Graph map = mapGen.StartGenerator();
 
             GD.Print("Rendering map");
-            world2DRenderer.SetActiveMap(map);
+            if (mode is WorldGenMode.Gen2D)
+            {
+                world2DRenderer.SetActiveMap(map);
+            }
+            else if (mode is WorldGenMode.Gen3D)
+            {
+                world3DRenderer.SetMap(map);
+                world3DRenderer.DrawMesh();
+            }
 
             GD.Print("Done");
         }
