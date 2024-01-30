@@ -36,10 +36,13 @@ namespace InnoRPG.scripts.generation.map.layers.polygons
                     //Clamp corner to world border
                     Vector2 clampedCorner = ClampVector(cornerPos, 0, options.worldSize);
 
-                    Corner corner = new(new Godot.Vector2(clampedCorner.x, clampedCorner.y), options.worldSize);
-                    Corner existingCorner = graph.corners.FirstOrDefault(x => x.Equals(corner)); //Querying graph.corners is slow asf
-                    if (existingCorner != null) corner = existingCorner;
-                    else graph.corners.Add(corner);
+                    Corner corner;
+                    if (!graph.corners.TryGetValue(ToVec2(clampedCorner), out corner))
+                    {
+                        corner = new(new Godot.Vector2(clampedCorner.x, clampedCorner.y), options.worldSize);
+                        graph.corners.Add(corner.position, corner);
+                        graph.cornerPositions.Add(corner.position);
+                    }
 
                     centre.corners.Add(corner);
                     corner.touches.Add(centre);
@@ -77,7 +80,7 @@ namespace InnoRPG.scripts.generation.map.layers.polygons
             GD.Print($"GeneratePolygonLayer polygon extraction took {debugStopwatch.ElapsedMilliseconds}ms");
             debugStopwatch.Restart();
 
-            foreach (Corner corner in graph.corners)
+            foreach (Corner corner in graph.corners.Values)
             {
                 foreach (Edge edge in corner.protrudes)
                 {
@@ -95,5 +98,7 @@ namespace InnoRPG.scripts.generation.map.layers.polygons
 
         private Vector2 ClampVector(Vector2 vec, double min, double max) =>
             new Vector2((float)Mathf.Clamp(vec.x, min, max), (float)Mathf.Clamp(vec.y, min, max));
+
+        private Godot.Vector2 ToVec2(Vector2 vec) => new Godot.Vector2(vec.x, vec.y);
     }
 }

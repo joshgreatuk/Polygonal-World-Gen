@@ -38,7 +38,7 @@ namespace InnoRPG.scripts.generation.map.layers.water
                 }
             }
 
-            foreach (Corner corner in graph.corners)
+            foreach (Corner corner in graph.corners.Values)
             {
                 if (corner.touches.All(x => x.waterFlags.HasFlag(WaterFlags.Ocean)))
                 {

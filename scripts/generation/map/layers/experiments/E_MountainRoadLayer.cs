@@ -12,7 +12,7 @@ namespace InnoRPG.scripts.generation.map.layers.experiments
         public override void ProcessLayer(ref Graph graph, MapGenerationOptions options)
         {
             float targetRoadElevation = 6f;
-            Corner startCorner = GetClosestTargetElevation(graph.corners.Where(x => x.waterFlags == WaterFlags.None).ToList(), targetRoadElevation);
+            Corner startCorner = GetClosestTargetElevation(graph.corners.Values.Where(x => x.waterFlags == WaterFlags.None).ToList(), targetRoadElevation);
             List<Corner> usedCorners = new();
 
             Corner currentCorner = startCorner;

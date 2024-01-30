@@ -38,7 +38,7 @@ namespace InnoRPG.scripts.generation.world
         {
             if (this.map != null)
             {
-                foreach (Corner corner in this.map.corners.Where(x => x.cornerLabel != null)) corner.cornerLabel.QueueFree();
+                foreach (Corner corner in this.map.corners.Values.Where(x => x.cornerLabel != null)) corner.cornerLabel.QueueFree();
                 foreach (Centre centre in this.map.centres.Where(x => x.centreLabel != null)) centre.centreLabel.QueueFree();
             }
 
@@ -71,7 +71,7 @@ namespace InnoRPG.scripts.generation.world
         {
             if (mode is World2DRenderOptions.ColourMode2D.None) return; //TO-DO: Redo this, flags wont work properlyt with dotted, look at DrawEdges()
 
-            foreach (Corner corner in map.corners)
+            foreach (Corner corner in map.corners.Values)
             {
                 if (mode.HasFlag(World2DRenderOptions.ColourMode2D.Solid))
                 {
@@ -197,7 +197,7 @@ namespace InnoRPG.scripts.generation.world
         {
             if (mode is World2DRenderOptions.TextMode2D.None) return;
 
-            foreach (Corner corner in options.includeWater ? map.corners : map.corners.Where(x => !x.waterFlags.HasFlag(WaterFlags.Water)))
+            foreach (Corner corner in options.includeWater ? map.corners.Values : map.corners.Values.Where(x => !x.waterFlags.HasFlag(WaterFlags.Water)))
             {
                 string textContents = string.Empty;
                 if (mode.HasFlag(World2DRenderOptions.TextMode2D.Temperature))

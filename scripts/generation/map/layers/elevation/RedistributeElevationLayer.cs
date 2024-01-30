@@ -13,7 +13,7 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
         {
             double scaleFactor = options.elevationScaleFactor;
 
-            Corner[] cornerList = graph.corners.Where(x => !x.waterFlags.HasFlag(WaterFlags.Water)).OrderBy(x => x.elevation).ToArray();
+            Corner[] cornerList = graph.corners.Values.Where(x => !x.waterFlags.HasFlag(WaterFlags.Water)).OrderBy(x => x.elevation).ToArray();
             for (int i = 0; i < cornerList.Length; i++)
             {
                 double y = (double)i / (cornerList.Length - 1);

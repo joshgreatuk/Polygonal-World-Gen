@@ -12,7 +12,7 @@ namespace InnoRPG.scripts.generation.map.layers.temperature
         public override void ProcessLayer(ref Graph graph, MapGenerationOptions options)
         {
             //TO-DO: Add equator position
-            foreach (Corner corner in graph.corners)
+            foreach (Corner corner in graph.corners.Values)
             {
                 double yFactor = corner.position.Y / (options.worldSize / 2);
                 if (yFactor < 1)

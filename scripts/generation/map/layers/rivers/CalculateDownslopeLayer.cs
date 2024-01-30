@@ -11,7 +11,7 @@ namespace InnoRPG.scripts.generation.map.layers.rivers
     {
         public override void ProcessLayer(ref Graph graph, MapGenerationOptions options)
         {
-            foreach (Corner corner in graph.corners.Where(x => !x.waterFlags.HasFlag(WaterFlags.Water)))
+            foreach (Corner corner in graph.corners.Values.Where(x => !x.waterFlags.HasFlag(WaterFlags.Water)))
             {
                 Corner downslope = corner;
                 foreach (Corner adjacent in corner.adjacent)

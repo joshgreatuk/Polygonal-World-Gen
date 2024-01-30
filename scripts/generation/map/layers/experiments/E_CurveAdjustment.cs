@@ -11,7 +11,7 @@ namespace InnoRPG.scripts.generation.map.layers.experiments
     {
         public override void ProcessLayer(ref Graph graph, MapGenerationOptions options)
         {
-            foreach (Corner corner in graph.corners.Where(x => !x.waterFlags.HasFlag(WaterFlags.Ocean)))
+            foreach (Corner corner in graph.corners.Values.Where(x => !x.waterFlags.HasFlag(WaterFlags.Ocean)))
             {
                 float factor = 0.5f + (float)(corner.elevation / graph.maxElevation);
                 corner.elevation *= options.elevationCurve.SampleBaked(factor);

@@ -18,7 +18,7 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
             double minElevation = 1;
             double maxElevation = 1;
 
-            foreach (Corner corner in graph.corners)
+            foreach (Corner corner in graph.corners.Values)
             {
                 if (corner.waterFlags.HasFlag(WaterFlags.Coast))
                 {
@@ -64,13 +64,13 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
                 }
             }
 
-            foreach (Corner corner in graph.corners.Where(x => x.elevation == Mathf.Inf))
+            foreach (Corner corner in graph.corners.Values.Where(x => x.elevation == Mathf.Inf))
             {
                 corner.elevation = corner.adjacent.Where(x => x.elevation != Mathf.Inf).Average(x => x.elevation);
             }
 
             //Add randomness
-            foreach (Corner corner in graph.corners.Where(x => !x.waterFlags.HasFlag(WaterFlags.Ocean)))
+            foreach (Corner corner in graph.corners.Values.Where(x => !x.waterFlags.HasFlag(WaterFlags.Ocean)))
             {
                 corner.elevation += random.Randf();
             }

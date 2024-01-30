@@ -87,7 +87,7 @@ namespace InnoRPG.scripts.generation.map
                 GD.Print($"Map layer '{layerType.Name}' returned in {stopwatch.ElapsedMilliseconds}ms");
             }
 
-            GD.Print("Map generated");
+            GD.Print($"Map generated");
             graph.CalculateGraphLimits();
             return graph;
         }

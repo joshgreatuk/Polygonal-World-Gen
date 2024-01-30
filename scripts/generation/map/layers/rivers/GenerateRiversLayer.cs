@@ -18,7 +18,7 @@ namespace InnoRPG.scripts.generation.map.layers.rivers
 
             for (int i=0; i < options.riverIterations; i++)
             {
-                Corner corner = graph.corners[random.RandiRange(0, graph.corners.Count - 1)];
+                Corner corner = graph.corners[graph.cornerPositions[random.RandiRange(0, graph.corners.Count - 1)]];
                 if (corner.waterFlags.HasFlag(WaterFlags.Ocean) || corner.elevation < 0.3 || corner.elevation < 0.9) continue;
 
                 while (!corner.waterFlags.HasFlag(WaterFlags.Coast))

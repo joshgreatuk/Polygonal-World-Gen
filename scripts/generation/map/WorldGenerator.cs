@@ -4,6 +4,7 @@ using InnoRPG.scripts.generation.map.data;
 using InnoRPG.scripts.generation.world;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,9 +24,14 @@ namespace InnoRPG.scripts.generation
         //The control class for the world generation system
         public override void _Ready()
         {
+            Stopwatch stopwatch = new();
+            float stopwatchTotal = 0;
+            stopwatch.Start();
             GD.Print("Generating map");
             Graph map = mapGen.StartGenerator();
-
+            GD.Print($"Generator returned in {stopwatch.ElapsedMilliseconds}ms");
+            stopwatchTotal += stopwatch.ElapsedMilliseconds;
+            stopwatch.Restart();
             GD.Print("Rendering map");
             if (mode is WorldGenMode.Gen2D)
             {
@@ -36,8 +42,10 @@ namespace InnoRPG.scripts.generation
                 world3DRenderer.SetMap(map);
                 world3DRenderer.DrawMesh();
             }
-
-            GD.Print("Done");
+            GD.Print($"Renderer returned in {stopwatch.ElapsedMilliseconds}ms");
+            stopwatchTotal += stopwatch.ElapsedMilliseconds;
+            stopwatch.Stop();
+            GD.Print($"Done in {stopwatchTotal}ms");
         }
 
         public override void _UnhandledKeyInput(InputEvent @event)

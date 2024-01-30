@@ -23,7 +23,7 @@ namespace InnoRPG.scripts.generation.map.layers.water
             double dipAngle = random.RandfRange(0, 2 * (float)Math.PI);
             double dipWidth = random.RandfRange(0.2f, 0.7f);
 
-            foreach (Corner corner in graph.corners)
+            foreach (Corner corner in graph.corners.Values)
             {
                 float halfSize = options.worldSize / 2;
                 Vector2 normalPos = (corner.position - new Vector2(halfSize, halfSize)) / halfSize;

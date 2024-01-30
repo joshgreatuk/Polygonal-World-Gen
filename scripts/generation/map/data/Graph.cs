@@ -1,6 +1,7 @@
 ﻿using Godot;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,8 @@ namespace InnoRPG.scripts.generation.map.data
 
         public List<Centre> centres = new();
         public List<Edge> edges = new();
-        public List<Corner> corners = new();
+        public List<Vector2> cornerPositions = new();
+        public Dictionary<Vector2, Corner> corners = new();
 
         public bool limitsCalculated = false;
 
