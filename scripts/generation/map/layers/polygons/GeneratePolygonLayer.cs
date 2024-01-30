@@ -1,10 +1,14 @@
-﻿using InnoRPG.scripts.generation.map.data;
+﻿using Godot;
+using InnoRPG.scripts.generation.map.data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using VoronatorSharp;
+using Vector2 = VoronatorSharp.Vector2;
+using Corner = InnoRPG.scripts.generation.map.data.Corner;
 
 namespace InnoRPG.scripts.generation.map.layers.polygons
 {
@@ -13,10 +17,15 @@ namespace InnoRPG.scripts.generation.map.layers.polygons
         public override void ProcessLayer(ref Graph graph, MapGenerationOptions options)
         {
             //Generate polygons from random points, clear random points
+            Stopwatch debugStopwatch = new();
+            debugStopwatch.Start();
             Voronator voronator = new(
                 graph.randomPoints.Select(x => new Vector2(x.X, x.Y)).ToList(),
                 Vector2.zero,
                 new Vector2(options.worldSize, options.worldSize));
+
+            GD.Print($"GeneratePolygonLayer Voronator returned in {debugStopwatch.ElapsedMilliseconds}ms");
+            debugStopwatch.Restart();
 
             for (int i = 0; i < options.voronoiPointCount; i++)
             {
@@ -25,14 +34,10 @@ namespace InnoRPG.scripts.generation.map.layers.polygons
                 {
                     if (cornerPos == null) continue;
                     //Clamp corner to world border
-                    Vector2 clampedCorner = cornerPos;
-                    if (cornerPos.x < 0) clampedCorner.x = 0;
-                    if (cornerPos.x > options.worldSize) clampedCorner.x = options.worldSize;
-                    if (cornerPos.y < 0) clampedCorner.y = 0;
-                    if (cornerPos.y > options.worldSize) clampedCorner.y = options.worldSize;
+                    Vector2 clampedCorner = ClampVector(cornerPos, 0, options.worldSize);
 
                     Corner corner = new(new Godot.Vector2(clampedCorner.x, clampedCorner.y), options.worldSize);
-                    Corner existingCorner = graph.corners.FirstOrDefault(x => x.Equals(corner));
+                    Corner existingCorner = graph.corners.FirstOrDefault(x => x.Equals(corner)); //Querying graph.corners is slow asf
                     if (existingCorner != null) corner = existingCorner;
                     else graph.corners.Add(corner);
 
@@ -44,18 +49,12 @@ namespace InnoRPG.scripts.generation.map.layers.polygons
                 for (int j = 0; j < centre.corners.Count; j++)
                 {
                     //Generate edges between corners
-                    Edge newEdge = null;
-                    if (j == centre.corners.Count - 1)
-                    {
-                        newEdge = new Edge(centre, null, centre.corners.Last(), centre.corners.First());
-                    }
-                    else
-                    {
-                        newEdge = new Edge(centre, null, centre.corners[j], centre.corners[j + 1]);
-                    }
+                    int k = j + 1;
+                    if (k >= centre.corners.Count) k = 0;
+                    Edge newEdge = new Edge(centre, null, centre.corners[j], centre.corners[k]);
 
                     //Check if the edge already exists
-                    Edge existingEdge = graph.edges.FirstOrDefault(x => x.Equals(newEdge));
+                    Edge existingEdge = centre.corners.SelectMany(x => x.protrudes).FirstOrDefault(x => x.Equals(newEdge));
                     if (existingEdge != null)
                     {
                         newEdge = existingEdge;
@@ -75,6 +74,9 @@ namespace InnoRPG.scripts.generation.map.layers.polygons
             }
             graph.randomPoints.Clear(); //For memory
 
+            GD.Print($"GeneratePolygonLayer polygon extraction took {debugStopwatch.ElapsedMilliseconds}ms");
+            debugStopwatch.Restart();
+
             foreach (Corner corner in graph.corners)
             {
                 foreach (Edge edge in corner.protrudes)
@@ -86,6 +88,12 @@ namespace InnoRPG.scripts.generation.map.layers.polygons
                     corner.adjacent.Add(adjacent);
                 }
             }
+
+            GD.Print($"GeneratePolygonLayer adjacent collection took {debugStopwatch.ElapsedMilliseconds}ms");
+            debugStopwatch.Stop();
         }
+
+        private Vector2 ClampVector(Vector2 vec, double min, double max) =>
+            new Vector2((float)Mathf.Clamp(vec.x, min, max), (float)Mathf.Clamp(vec.y, min, max));
     }
 }

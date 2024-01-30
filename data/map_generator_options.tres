@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/generation/map/MapGenerationOptions.cs" id="1_itdef"]
 
 [sub_resource type="Curve" id="Curve_1e3xb"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.049505, 0.175824), 0.688897, 0.688897, 0, 0, Vector2(0.321782, 0.527472), 0.0, 0.0, 0, 0, Vector2(0.688119, 0.538462), 0.0, 0.0, 0, 0, Vector2(0.920792, 0.791209), 0.0, 0.0, 0, 0, Vector2(1, 1), 1.4, 0.0, 0, 0]
-point_count = 6
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.113861, 1), 0.0, 0.0, 0, 0, Vector2(0.663366, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.692308), -1.41688, 0.0, 0, 0]
+point_count = 4
 
 [resource]
 script = ExtResource("1_itdef")

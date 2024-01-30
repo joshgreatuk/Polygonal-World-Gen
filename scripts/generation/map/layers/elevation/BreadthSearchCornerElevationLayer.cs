@@ -46,7 +46,7 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
 
                     if (newElevation < neighbour.elevation)
                     {
-                        neighbour.elevation = neighbour.waterFlags.HasFlag(WaterFlags.Ocean) ? -newElevation : newElevation;
+                        neighbour.elevation = neighbour.waterFlags.HasFlag(WaterFlags.Ocean) ? 0 : newElevation;
                         neighbour.downSlope = corner;
 
                         if (neighbour.waterFlags.HasFlag(WaterFlags.Ocean) && newElevation > minElevation) minElevation = newElevation;
