@@ -1,5 +1,6 @@
 # Godot 4+ specific ignores
 .godot/
 .vs/
-builds/
+build/
 media/
+android/

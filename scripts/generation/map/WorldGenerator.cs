@@ -24,6 +24,11 @@ namespace InnoRPG.scripts.generation
         //The control class for the world generation system
         public override void _Ready()
         {
+            Task.Run(GenerateWorld);
+        }
+
+        public void GenerateWorld()
+        {
             Stopwatch stopwatch = new();
             float stopwatchTotal = 0;
             stopwatch.Start();

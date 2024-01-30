@@ -2,6 +2,7 @@
 using InnoRPG.scripts.generation.map.data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,9 +35,12 @@ namespace InnoRPG.scripts.generation.world
 
         public void DrawMesh()
         {
+            Stopwatch stopwatch = new();
             List<Tri> tris = new();
 
             RenderTerrain(ref tris, currentMap);
+            GD.Print($"World3DRenderer generated tris in {stopwatch.ElapsedMilliseconds}ms");
+            stopwatch.Restart();
 
             SurfaceTool surfaceTool = new();
             surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
@@ -46,17 +50,26 @@ namespace InnoRPG.scripts.generation.world
                 surfaceTool.AddVertex(x);
                 }));
 
+            GD.Print($"World3DRenderer added tris in {stopwatch.ElapsedMilliseconds}ms");
+            stopwatch.Restart();
+
             surfaceTool.Index();
             surfaceTool.GenerateNormals();
             surfaceTool.GenerateTangents();
             Mesh mesh = surfaceTool.Commit();
 
+            GD.Print($"World3DRenderer indexed, created normals and committed in {stopwatch.ElapsedMilliseconds}ms");
+            stopwatch.Restart();
+#if GODOT_PC
             ResourceSaver.Save(mesh, "res://map_render.tres", ResourceSaver.SaverFlags.Compress);
+            GD.Print($"World3DRenderer saved mesh in {stopwatch.ElapsedMilliseconds}ms");
+            stopwatch.Stop();
+#endif
 
             if (meshInstance == null)
             {
                 meshInstance = new();
-                AddChild(meshInstance);
+                CallDeferred("add_child", meshInstance);
             }
 
             meshInstance.Mesh = mesh;

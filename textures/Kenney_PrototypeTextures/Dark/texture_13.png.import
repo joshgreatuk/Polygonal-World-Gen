@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dp2bwlohuv3my"
 path.s3tc="res://.godot/imported/texture_13.png-ec75ee9a399dbf36c8075825d2d7f961.s3tc.ctex"
+path.etc2="res://.godot/imported/texture_13.png-ec75ee9a399dbf36c8075825d2d7f961.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://textures/Kenney_PrototypeTextures/Dark/texture_13.png"
-dest_files=["res://.godot/imported/texture_13.png-ec75ee9a399dbf36c8075825d2d7f961.s3tc.ctex"]
+dest_files=["res://.godot/imported/texture_13.png-ec75ee9a399dbf36c8075825d2d7f961.s3tc.ctex", "res://.godot/imported/texture_13.png-ec75ee9a399dbf36c8075825d2d7f961.etc2.ctex"]
 
 [params]
 
