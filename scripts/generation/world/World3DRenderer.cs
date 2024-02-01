@@ -42,6 +42,10 @@ namespace InnoRPG.scripts.generation.world
             GD.Print($"World3DRenderer generated tris in {stopwatch.ElapsedMilliseconds}ms");
             stopwatch.Restart();
 
+            RenderRivers(ref tris, currentMap);
+            GD.Print($"World3DRenderer generated river tris in {stopwatch.ElapsedMilliseconds}ms");
+            stopwatch.Restart();
+
             SurfaceTool surfaceTool = new();
             surfaceTool.Begin(Mesh.PrimitiveType.Triangles);
             tris.ForEach(y => y.points.ForEach(x => {
@@ -58,13 +62,15 @@ namespace InnoRPG.scripts.generation.world
             surfaceTool.GenerateTangents();
             Mesh mesh = surfaceTool.Commit();
 
+            mesh.SurfaceSetMaterial(0, baseMaterial);
+
             GD.Print($"World3DRenderer indexed, created normals and committed in {stopwatch.ElapsedMilliseconds}ms");
             stopwatch.Restart();
 #if GODOT_PC
             ResourceSaver.Save(mesh, "res://map_render.tres", ResourceSaver.SaverFlags.Compress);
             GD.Print($"World3DRenderer saved mesh in {stopwatch.ElapsedMilliseconds}ms");
-            stopwatch.Stop();
 #endif
+            stopwatch.Stop();
 
             if (meshInstance == null)
             {
@@ -73,7 +79,6 @@ namespace InnoRPG.scripts.generation.world
             }
 
             meshInstance.Mesh = mesh;
-            meshInstance.MaterialOverride = baseMaterial;
         }
 
         private void RenderTerrain(ref List<Tri> tris, Graph graph)
@@ -143,7 +148,7 @@ namespace InnoRPG.scripts.generation.world
 
         }
 
-        private void DrawRivers(ref List<Tri> verts, Graph graph)
+        private void RenderRivers(ref List<Tri> verts, Graph graph)
         { //Take river edges, bezel them, eventually draw more polygons on top of riverbeds with a translucent material
 
         }

@@ -19,6 +19,8 @@ namespace InnoRPG.scripts.generation.map
         [Export] public float waterLevel = 0.15f;
         [Export] public bool allowCliffs = true;
 
+        [Export] public float cliffLevel = 0.5f;
+
         [Export] public float nTemp = 20;
         [Export] public float equatorTemp = 50;
         [Export] public float sTemp = 0;
@@ -28,5 +30,7 @@ namespace InnoRPG.scripts.generation.map
         [Export] public int riverIterations = 200;
 
         [Export] public Curve elevationCurve;
+
+        [Export] public FastNoiseLite noise;
     }
 }

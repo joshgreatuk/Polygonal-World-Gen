@@ -33,6 +33,7 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
 
             RandomNumberGenerator random = new();
             random.Seed = graph.mapSeed;
+            options.noise.Seed = (int)graph.mapSeed;
 
             while (queue.TryDequeue(out Corner corner))
             {
@@ -54,7 +55,7 @@ namespace InnoRPG.scripts.generation.map.layers.elevation
 
                         if (edge.IsEdgeLake())
                         {
-                            queue.Prepend(neighbour);
+                            queue = new Queue<Corner>(queue.Prepend(neighbour).ToList());
                         }
                         else
                         {

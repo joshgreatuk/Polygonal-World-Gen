@@ -7,6 +7,10 @@
     <RootNamespace>InnoRPG</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="android\**" />
+    <EmbeddedResource Remove="android\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="VoronatorSharp">
       <HintPath>external\VoronatorSharp.dll</HintPath>
     </Reference>

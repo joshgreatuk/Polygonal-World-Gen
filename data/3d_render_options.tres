@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_u3h48")
 heightFactor = 5.0
-flatMidPoint = 0.01
+flatMidPoint = 0.95
 landColour = Color(0.133333, 0.545098, 0.133333, 1)
 lakeColour = Color(0.109804, 0.470588, 0.596078, 1)
 oceanColour = Color(0.207843, 0.380392, 0.431373, 1)

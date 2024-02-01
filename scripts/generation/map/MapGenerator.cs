@@ -11,6 +11,7 @@ namespace InnoRPG.scripts.generation.map
     using InnoRPG.scripts.generation.map.layers;
     using InnoRPG.scripts.generation.map.layers.elevation;
     using InnoRPG.scripts.generation.map.layers.experiments;
+    using InnoRPG.scripts.generation.map.layers.experiments.elevation;
     using InnoRPG.scripts.generation.map.layers.polygons;
     using InnoRPG.scripts.generation.map.layers.rivers;
     using InnoRPG.scripts.generation.map.layers.temperature;
@@ -31,12 +32,17 @@ namespace InnoRPG.scripts.generation.map
             //Water
             typeof(AssignWaterLayer),
             typeof(AssignOceanLayer),
+
             //Elevation TO-DO: Add noise-based elevation
-            typeof(BreadthSearchCornerElevationLayer),
+            //typeof(E_NoiseElevation),
+
+            //Coast-based elevation
+            typeof(BreadthSearchCornerElevationLayer), //Best method
             //typeof(AssignCornerElevationLayer),
             //typeof(RedistributeElevationLayer), //Not sure if this is needed honestly
             //typeof(E_CurveAdjustment),
             typeof(AssignCentreElevationLayer),
+
             //Temperature
             typeof(AssignCornerTempLayer),
             typeof(AssignCentreTempLayer),
