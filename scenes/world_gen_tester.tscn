@@ -10,7 +10,7 @@
 [ext_resource type="Script" path="res://scripts/generation/world/World3DRenderer.cs" id="8_ytepu"]
 [ext_resource type="Material" uid="uid://cei8ygp4mbq2r" path="res://materials/Material.tres" id="9_1ximr"]
 [ext_resource type="Resource" uid="uid://da335c41uwugg" path="res://data/3d_render_options.tres" id="9_i0mi6"]
-[ext_resource type="ArrayMesh" uid="uid://c5t4s8lyep0ve" path="res://map_render.tres" id="11_jqjqq"]
+[ext_resource type="ArrayMesh" uid="uid://dtgcd8tvqnr51" path="res://map_render.tres" id="11_jqjqq"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_6lioe"]
 

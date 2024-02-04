@@ -13,7 +13,7 @@ fractal_octaves = 2
 
 [resource]
 script = ExtResource("1_itdef")
-voronoiPointCount = 5000
+voronoiPointCount = 20000
 worldSize = 1024
 lloydsAlgorithmIterations = 3
 elevationScaleFactor = 1.1
@@ -28,3 +28,4 @@ equatorPosition = 0.6
 riverIterations = 300
 elevationCurve = SubResource("Curve_1e3xb")
 noise = SubResource("FastNoiseLite_f0r6t")
+stepValue = 0.15

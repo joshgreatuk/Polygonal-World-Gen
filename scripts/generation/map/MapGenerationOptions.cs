@@ -32,5 +32,7 @@ namespace InnoRPG.scripts.generation.map
         [Export] public Curve elevationCurve;
 
         [Export] public FastNoiseLite noise;
+
+        [Export] public double stepValue = 0.5f;
     }
 }

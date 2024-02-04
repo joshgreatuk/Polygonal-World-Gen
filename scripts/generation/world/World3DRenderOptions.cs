@@ -12,6 +12,7 @@ namespace InnoRPG.scripts.generation.world
     {
         [ExportGroup("Settings")]
         [Export] public float heightFactor = 1f;
+        [Export] public bool flattenMidPoint = false;
         [Export] public float flatMidPoint = 0.5f;
 
         [ExportGroup("Water Colours")]

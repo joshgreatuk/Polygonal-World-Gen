@@ -39,8 +39,9 @@ namespace InnoRPG.scripts.generation.map
             //Coast-based elevation
             typeof(BreadthSearchCornerElevationLayer), //Best method
             //typeof(AssignCornerElevationLayer),
-            //typeof(RedistributeElevationLayer), //Not sure if this is needed honestly
+            typeof(RedistributeElevationLayer), //Not sure if this is needed honestly
             //typeof(E_CurveAdjustment),
+            typeof(E_StepRounding),
             typeof(AssignCentreElevationLayer),
 
             //Temperature

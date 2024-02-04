@@ -92,6 +92,23 @@ namespace InnoRPG.scripts.generation.world
                     int j = i + 1;
                     if (j >= centre.corners.Count) j = 0;
 
+                    Color centreColour = centre.waterFlags.HasFlag(WaterFlags.Water) ?
+                            GetWaterColour(centre.waterFlags, centre.elevation) :
+                            GetElevationColour(centre.elevation);
+
+                    if (!settings.flattenMidPoint)
+                    {
+                        tris.Add(new(new Vector3[]
+                        {
+                            ToVector3(centre.position, centre.elevation),
+                            ToVector3(centre.corners[i].position, centre.corners[i].elevation),
+                            ToVector3(centre.corners[j].position, centre.corners[j].elevation)
+                        },
+                            centreColour
+                        ));
+                        continue;
+                    }
+
                     //Generate tris to half way then use the 2 we took originally and the 2 we generated to form the outer ring with elevation
                     Vector3 midI = FindMidPoint(
                         ToVector3(centre.position, centre.elevation), 
@@ -102,10 +119,6 @@ namespace InnoRPG.scripts.generation.world
                         ToVector3(centre.position, centre.elevation),
                         ToVector3(centre.corners[j].position, centre.elevation),
                         settings.flatMidPoint);
-
-                    Color centreColour = centre.waterFlags.HasFlag(WaterFlags.Water) ?
-                            GetWaterColour(centre.waterFlags, centre.elevation) :
-                            GetElevationColour(centre.elevation);
 
                     //Add the tri from centre to mid
                     tris.Add(new(new Vector3[] 
@@ -135,10 +148,6 @@ namespace InnoRPG.scripts.generation.world
                     },
                         centreColour
                     ));
-
-                    //verts.Add(ToVector3(centre.position, centre.elevation));
-                    //verts.Add(ToVector3(centre.corners[i].position, centre.corners[i].elevation));
-                    //verts.Add(ToVector3(centre.corners[j].position, centre.corners[j].elevation));
                 }
             }
         }
