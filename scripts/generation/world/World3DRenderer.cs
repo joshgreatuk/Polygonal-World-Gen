@@ -98,17 +98,30 @@ namespace InnoRPG.scripts.generation.world
 
                     if (!settings.flattenMidPoint)
                     {
+                        //Easier to build rivers in here?
+                        Corner iCorner = centre.corners[i];
+                        Corner jCorner = centre.corners[j];
+                         
+                        Vector2 iPosition = iCorner.position;
+                        Vector2 jPosition = jCorner.position;
+
+                        if (iCorner.river > 0 && jCorner.river > 0)
+                        {
+                            //TO-DO: Build river support
+                        }
+
                         tris.Add(new(new Vector3[]
                         {
                             ToVector3(centre.position, centre.elevation),
-                            ToVector3(centre.corners[i].position, centre.corners[i].elevation),
-                            ToVector3(centre.corners[j].position, centre.corners[j].elevation)
+                            ToVector3(iPosition, iCorner.elevation),
+                            ToVector3(jPosition, jCorner.elevation)
                         },
                             centreColour
                         ));
                         continue;
                     }
 
+                    //TO-DO: Build river support
                     //Generate tris to half way then use the 2 we took originally and the 2 we generated to form the outer ring with elevation
                     Vector3 midI = FindMidPoint(
                         ToVector3(centre.position, centre.elevation), 
