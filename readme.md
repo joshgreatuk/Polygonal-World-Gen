@@ -1,4 +1,5 @@
 # Polygonal World Generation - Godot 4.2 - C#
+![image](https://github.com/joshgreatuk/Polygonal-World-Gen/assets/35399690/a6f8941c-0252-4284-9921-3cf7a4b6d9b5)
 
 ## World Generation? InnoRPG? Mobile Fantasy RPG?
 Yes! The Original idea for this project was a DnD-like fantasy RPG aimed at mobile platforms. It's an interesting concept and one that I'd like to play with more but for now, this project only contains the world generation part of the concept as well as the 2D and 3D renderer that I made to show the generation in Godot 4.2.
