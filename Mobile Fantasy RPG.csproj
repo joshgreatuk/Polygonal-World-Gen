@@ -11,6 +11,9 @@
     <EmbeddedResource Remove="android\**" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="readme.md" />
+  </ItemGroup>
+  <ItemGroup>
     <Reference Include="VoronatorSharp">
       <HintPath>external\VoronatorSharp.dll</HintPath>
     </Reference>

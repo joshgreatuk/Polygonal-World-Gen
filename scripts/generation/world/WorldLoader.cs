@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace InnoRPG.scripts.generation.world
 {
+    //This is the class responsible for saving and loading worlds from files
     public partial class WorldLoader : Node
     {
 

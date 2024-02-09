@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 namespace InnoRPG.scripts.generation.map
 {
     using data;
-    using InnoRPG.scripts.generation.map.layers;
-    using InnoRPG.scripts.generation.map.layers.elevation;
-    using InnoRPG.scripts.generation.map.layers.experiments;
-    using InnoRPG.scripts.generation.map.layers.experiments.elevation;
-    using InnoRPG.scripts.generation.map.layers.polygons;
-    using InnoRPG.scripts.generation.map.layers.rivers;
-    using InnoRPG.scripts.generation.map.layers.temperature;
-    using InnoRPG.scripts.generation.map.layers.water;
+    using layers;
+    using layers.elevation;
+    using layers.experiments;
+    using layers.experiments.elevation;
+    using layers.polygons;
+    using layers.rivers;
+    using layers.temperature;
+    using layers.water;
     using System.Diagnostics;
 
     [GlobalClass]
